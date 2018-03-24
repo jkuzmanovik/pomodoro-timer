@@ -8,6 +8,12 @@ export default class Timer extends React.Component{
             fullTime: this.props.secs + (this.props.mins * 60)
     }
 }
+    resetCounter = () => {
+        this.setState({
+            fullTime: this.props.secs + (this.props.mins * 60)
+        })
+ 
+    }
 
     stopCounter = () => {
          clearInterval(this.interval) 
@@ -38,6 +44,7 @@ export default class Timer extends React.Component{
             <View>
                 <Button title='start' onPress = { this.startCounter} />
                 <Button title='stop' onPress = { this.stopCounter} />
+                <Button title='reset' onPress = { this.resetCounter} />
                <Text> MINS: {Math.floor(this.state.fullTime / 60)} SECS: {this.state.fullTime % 60} </Text>
 
             </View>
