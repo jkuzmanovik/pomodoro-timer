@@ -12,7 +12,6 @@ export default class Counter extends React.Component{
         }
     }
     updateMins = (mins) => { this.setState({mins}) } 
-
     updateSecs = (secs) => { this.setState({secs}) } 
 
     render(){
@@ -20,6 +19,7 @@ export default class Counter extends React.Component{
             <View>
                 <Timer mins = {this.state.mins - '0'} secs = {this.state.secs - '0'} />
                 <Input changeMins= {this.updateMins} changeSecs = {this.updateSecs} mins = {this.state.mins} secs={this.state.secs}/>
+
             </View>
         )
     }

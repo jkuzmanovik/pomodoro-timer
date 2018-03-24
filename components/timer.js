@@ -5,7 +5,9 @@ export default class Timer extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            fullTime: this.props.secs + (this.props.mins * 60)
+            fullTime: this.props.secs + (this.props.mins * 60),
+            show: props.show,
+            showButton: false,
     }
 }
     resetCounter = () => {
@@ -18,6 +20,7 @@ export default class Timer extends React.Component{
     stopCounter = () => {
          clearInterval(this.interval) 
          this.interval = null 
+         this.setState(prevState => ({...prevState}))
         }
      
 
@@ -27,32 +30,31 @@ export default class Timer extends React.Component{
     }
     count = () => {
         if(this.state.fullTime !== 0)
-        this.setState(prevState =>( {
-            fullTime: prevState.fullTime - 1
-             })
-         )
+            this.setState(prevState =>( {
+                fullTime: prevState.fullTime - 1
+                })
+            )
+    }
+
+    componentDidMount() {
+        this.startCounter
     }
 
     componentWillReceiveProps(nextProps){
         this.setState({
-            fullTime: nextProps.secs + (nextProps.mins * 60)
+            fullTime: nextProps.secs + (nextProps.mins * 60),
+            show: nextProps.show
         })
     }
 
     render(){
         return (
             <View>
-                <Button title='start' onPress = { this.startCounter} />
-                <Button title='stop' onPress = { this.stopCounter} />
                 <Button title='reset' onPress = { this.resetCounter} />
-               <Text> MINS: {Math.floor(this.state.fullTime / 60)} SECS: {this.state.fullTime % 60} </Text>
-
+                     {this.interval &&  <Button title='stop' onPress = { this.stopCounter} /> }
+                     {!this.interval &&  <Button title='start' onPress = { this.startCounter} />}
+               <Text>  {Math.floor(this.state.fullTime / 60)}:{this.state.fullTime % 60} </Text>
             </View>
         )
     }
-
-
-
-
-
 } 
