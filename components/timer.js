@@ -9,6 +9,11 @@ export default class Timer extends React.Component{
     }
 }
 
+    stopCounter = () => {
+         clearInterval(this.interval) 
+         this.interval = null 
+        }
+     
 
     startCounter = () => {
         if(!this.interval)
@@ -32,6 +37,7 @@ export default class Timer extends React.Component{
         return (
             <View>
                 <Button title='start' onPress = { this.startCounter} />
+                <Button title='stop' onPress = { this.stopCounter} />
                <Text> MINS: {Math.floor(this.state.fullTime / 60)} SECS: {this.state.fullTime % 60} </Text>
 
             </View>
