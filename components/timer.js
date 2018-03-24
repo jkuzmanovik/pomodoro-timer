@@ -1,57 +1,31 @@
 import React from 'react';
-import { Text,View,Button } from 'react-native';
-import Input from './input'
+import { Text,View } from 'react-native';
 
 export default class Timer extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            secs:10,
-            showCounter: true 
-        }
+            fullTime: this.props.secs + (this.props.mins * 60)
     }
+}
 
-    startCounter = () => {
-        this.setState(prevState => ({ showCounter: !prevState.showCounter }))
-        this.interval = setInterval(this.startCount,1000)
-    }
-
-    startCount = () => {
-        if(this.state.secs !== 0)
-            this.setState(prevState =>({ secs: prevState.secs + - 1 })) 
-        else 
-            clearInterval(this.interval)
-        }
-    
-    updateSecs = (secs) => { this.setState(prevState => ({ secs: prevState.secs + (secs - '0') })) }
-    
-    updateMins = (mins) => { this.setState(prevState => ({ secs: prevState.secs + (mins- '0') * 60 })) }    
-
-    stopCounter = () => {
-        clearInterval(this.interval)
-         this.setState(prevState => ({ showCounter: !prevState.showCounter }))
-    }
-
-    componentWillUnmount(){
-        clearInterval(this.interval)
-    }
-    componentDidMount(){
-        this.startCounter()
+    componentWillReceiveProps(nextProps){
+        this.setState({
+            fullTime: nextProps.secs + (nextProps.mins * 60)
+        })
     }
 
     render(){
-        let showButton  = null;
-        if(this.state.showCounter)
-            showButton = <Button title='start' onPress={this.startCounter} />
-        else
-            showButton = <Button title='stop' onPress={this.stopCounter} />
-        return(
+        return (
             <View>
-                <Text> {this.state.secs} </Text>
-                <Text> restart </Text>
-                {showButton}
-                <Input changeMins= {this.updateMins} changeSecs = {this.updateSecs} secs={this.state.secs}/>
+               <Text> MINS: {Math.floor(this.state.fullTime / 60)} SECS: {this.state.fullTime % 60} </Text>
+
             </View>
         )
     }
-}
+
+
+
+
+
+} 
